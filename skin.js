@@ -1,7 +1,7 @@
 // Garden Gnome Software - Skin
 // Pano2VR 7.1.4/20938
 // Filename: PMC.ggsk
-// Generated 2024-10-07T17:42:11
+// Generated 2024-10-07T17:49:10
 
 function pano2vrSkin(player,base) {
 	var me=this;
@@ -157,7 +157,7 @@ function pano2vrSkin(player,base) {
 		hs+='height : 186px;';
 		hs+='overflow : hidden;';
 		hs+='position : absolute;';
-		hs+='right : -2px;';
+		hs+='right : -3px;';
 		hs+='top : 0px;';
 		hs+='visibility : inherit;';
 		hs+='width : 210px;';
@@ -203,8 +203,8 @@ function pano2vrSkin(player,base) {
 		hs+='border : 1px solid #000000;';
 		hs+='color : rgba(255,255,255,1);';
 		hs+='height : 22px;';
-		hs+='left : -102px;';
 		hs+='position : absolute;';
+		hs+='right : 222px;';
 		hs+='top : 69px;';
 		hs+='visibility : inherit;';
 		hs+='width : 88px;';
@@ -246,6 +246,7 @@ function pano2vrSkin(player,base) {
 		}
 		me._basement_button.onclick=function (e) {
 			me._map_1.ggChangeMap("FloorPlan01");
+			me._map_1.ggChangeMap("FloorPlan03");
 		}
 		me._basement_button.ggUpdatePosition=function (useTransition) {
 		}
@@ -264,8 +265,8 @@ function pano2vrSkin(player,base) {
 		hs+='border : 1px solid #000000;';
 		hs+='color : rgba(255,255,255,1);';
 		hs+='height : 21px;';
-		hs+='left : -104px;';
 		hs+='position : absolute;';
+		hs+='right : 222px;';
 		hs+='top : 5px;';
 		hs+='visibility : inherit;';
 		hs+='width : 90px;';
@@ -324,8 +325,8 @@ function pano2vrSkin(player,base) {
 		hs+='border : 1px solid #000000;';
 		hs+='color : rgba(255,255,255,1);';
 		hs+='height : 22px;';
-		hs+='left : -102px;';
 		hs+='position : absolute;';
+		hs+='right : 222px;';
 		hs+='top : 36px;';
 		hs+='visibility : inherit;';
 		hs+='width : 88px;';
@@ -384,11 +385,11 @@ function pano2vrSkin(player,base) {
 		hs ='';
 		hs+='background : #1034ff;';
 		hs+='border : 1px solid #000000;';
+		hs+='bottom : 13px;';
 		hs+='color : rgba(255,255,255,1);';
 		hs+='height : 23px;';
 		hs+='left : 16px;';
 		hs+='position : absolute;';
-		hs+='top : 442px;';
 		hs+='visibility : inherit;';
 		hs+='width : 92px;';
 		hs+='pointer-events:auto;';
