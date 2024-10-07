@@ -174,7 +174,7 @@
       <max tilt="90" scaletofit="1" fov="140" fovstereographic="330" pan="360" fovfisheye="360"/>
     </view>
     <userdata title="" tags="Basement" source="" description="" author="" comment="" longitude="" customnodeid="" nodeid="node10" copyright="" datetime="" latitude="" info="" heading="0">
-      <mapcoords y_floorplan_percent="13.6674" mapid="FloorPlan03" x="1.10962" x_floorplan_percent="73.8574" y="-0.164795"/>
+      <mapcoords y_floorplan_percent="13.6674" mapid="BasementPlan" x="1.10962" x_floorplan_percent="73.8574" y="-0.164795"/>
     </userdata>
     <hotspots width="180" smoothmovement="0" wordwrap="1" height="20">
       <label borderradius="1" height="20" backgroundalpha="1" width="180" border="1" wordwrap="1" backgroundcolor="0xffffff" enabled="1" textalpha="1" bordercolor="0x000000" background="1" textcolor="0x000000" borderalpha="1"/>
@@ -201,7 +201,7 @@
       <max tilt="90" scaletofit="1" fov="140" fovstereographic="330" pan="360" fovfisheye="360"/>
     </view>
     <userdata title="" tags="Basement" source="" description="" author="" comment="" longitude="" customnodeid="" nodeid="node11" copyright="" datetime="" latitude="" info="" heading="0">
-      <mapcoords y_floorplan_percent="35.0797" mapid="FloorPlan03" x="1.12061" x_floorplan_percent="74.5887" y="-0.422974"/>
+      <mapcoords y_floorplan_percent="35.0797" mapid="BasementPlan" x="1.12061" x_floorplan_percent="74.5887" y="-0.422974"/>
     </userdata>
     <hotspots width="180" smoothmovement="0" wordwrap="1" height="20">
       <label borderradius="1" height="20" backgroundalpha="1" width="180" border="1" wordwrap="1" backgroundcolor="0xffffff" enabled="1" textalpha="1" bordercolor="0x000000" background="1" textcolor="0x000000" borderalpha="1"/>
@@ -229,7 +229,7 @@
       <max tilt="90" scaletofit="1" fov="140" fovstereographic="330" pan="360" fovfisheye="360"/>
     </view>
     <userdata title="" tags="Basement" source="" description="" author="" comment="" longitude="" customnodeid="" nodeid="node13" copyright="" datetime="" latitude="" info="" heading="0">
-      <mapcoords y_floorplan_percent="57.8588" mapid="FloorPlan03" x="1.11511" x_floorplan_percent="74.223" y="-0.697632"/>
+      <mapcoords y_floorplan_percent="57.8588" mapid="BasementPlan" x="1.11511" x_floorplan_percent="74.223" y="-0.697632"/>
     </userdata>
     <hotspots width="180" smoothmovement="0" wordwrap="1" height="20">
       <label borderradius="1" height="20" backgroundalpha="1" width="180" border="1" wordwrap="1" backgroundcolor="0xffffff" enabled="1" textalpha="1" bordercolor="0x000000" background="1" textcolor="0x000000" borderalpha="1"/>
@@ -257,7 +257,7 @@
       <max tilt="90" scaletofit="1" fov="140" fovstereographic="330" pan="360" fovfisheye="360"/>
     </view>
     <userdata title="" tags="Basement" source="" description="" author="" comment="" longitude="" customnodeid="" nodeid="node14" copyright="" datetime="" latitude="" info="" heading="0">
-      <mapcoords y_floorplan_percent="85.6492" mapid="FloorPlan03" x="1.13159" x_floorplan_percent="75.3199" y="-1.03271"/>
+      <mapcoords y_floorplan_percent="85.6492" mapid="BasementPlan" x="1.13159" x_floorplan_percent="75.3199" y="-1.03271"/>
     </userdata>
     <hotspots width="180" smoothmovement="0" wordwrap="1" height="20">
       <label borderradius="1" height="20" backgroundalpha="1" width="180" border="1" wordwrap="1" backgroundcolor="0xffffff" enabled="1" textalpha="1" bordercolor="0x000000" background="1" textcolor="0x000000" borderalpha="1"/>
@@ -284,7 +284,7 @@
       <max tilt="90" scaletofit="1" fov="140" fovstereographic="330" pan="360" fovfisheye="360"/>
     </view>
     <userdata title="" tags="Basement" source="" description="" author="" comment="" longitude="" customnodeid="" nodeid="node15" copyright="" datetime="" latitude="" info="" heading="0">
-      <mapcoords y_floorplan_percent="70.1595" mapid="FloorPlan03" x="0.32959" x_floorplan_percent="21.9378" y="-0.845947"/>
+      <mapcoords y_floorplan_percent="70.1595" mapid="BasementPlan" x="0.32959" x_floorplan_percent="21.9378" y="-0.845947"/>
     </userdata>
     <hotspots width="180" smoothmovement="0" wordwrap="1" height="20">
       <label borderradius="1" height="20" backgroundalpha="1" width="180" border="1" wordwrap="1" backgroundcolor="0xffffff" enabled="1" textalpha="1" bordercolor="0x000000" background="1" textcolor="0x000000" borderalpha="1"/>
@@ -307,5 +307,5 @@
   </masternode>
   <map title="Roof Plan" index="0" bgcolor="rgba(255, 255, 255, 1)" crispedges="0" floorplannorth="5" id="FloorPlan02" height="897" transparent="0" width="1048" tileformat="jpg" zoomlevels="1" type="file"/>
   <map title="Ground Plan" index="1" bgcolor="rgba(255, 255, 255, 1)" crispedges="0" floorplannorth="0" id="FloorPlan01" height="895" transparent="0" width="754" tileformat="jpg" zoomlevels="1" type="file"/>
-  <map title="Basement Plan" index="2" bgcolor="rgba(255, 255, 255, 1)" crispedges="0" floorplannorth="0" id="FloorPlan03" height="878" transparent="0" width="1094" tileformat="jpg" zoomlevels="1" type="file"/>
+  <map title="Basement Plan" index="2" bgcolor="rgba(255, 255, 255, 1)" crispedges="0" floorplannorth="0" id="BasementPlan" height="878" transparent="0" width="1094" tileformat="jpg" zoomlevels="1" type="file"/>
 </tour>

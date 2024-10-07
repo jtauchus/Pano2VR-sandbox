@@ -1,7 +1,7 @@
 // Garden Gnome Software - Skin
 // Pano2VR 7.1.4/20938
 // Filename: PMC.ggsk
-// Generated 2024-10-07T17:49:10
+// Generated 2024-10-07T18:00:50
 
 function pano2vrSkin(player,base) {
 	var me=this;
@@ -157,8 +157,8 @@ function pano2vrSkin(player,base) {
 		hs+='height : 186px;';
 		hs+='overflow : hidden;';
 		hs+='position : absolute;';
-		hs+='right : -3px;';
-		hs+='top : 0px;';
+		hs+='right : -1.42857%;';
+		hs+='top : 0%;';
 		hs+='visibility : inherit;';
 		hs+='width : 210px;';
 		hs+='pointer-events:auto;';
@@ -266,7 +266,7 @@ function pano2vrSkin(player,base) {
 		hs+='color : rgba(255,255,255,1);';
 		hs+='height : 21px;';
 		hs+='position : absolute;';
-		hs+='right : 222px;';
+		hs+='right : 105.714%;';
 		hs+='top : 5px;';
 		hs+='visibility : inherit;';
 		hs+='width : 90px;';
@@ -518,7 +518,7 @@ function pano2vrSkin(player,base) {
 			var imageFilename = basePath + 'images/maptiles/' + me._map_1.ggMapId + '_' + level + '.' + mapDetails['tileformat'];
 			me._map_1__img.setAttribute('src', imageFilename);
 			me._map_1__img.setAttribute('loading', 'lazy');
-		me._map_1__mapdiv.setAttribute('style','position: absolute; left: 0px; top: 0px;width:' + me._map_1.ggFloorplanWidth + 'px;height:' + me._map_1.ggFloorplanHeight + 'px;overflow:hidden;;');
+		me._map_1__mapdiv.setAttribute('style','position: absolute; right: 0px; top: 0px;width:' + me._map_1.ggFloorplanWidth + 'px;height:' + me._map_1.ggFloorplanHeight + 'px;overflow:hidden;;');
 		var image_rendering_prop = (player.getBrowser() == 2 || player.getBrowser() == 3) ? 'crisp-edges' : 'pixelated';
 		me._map_1__img.setAttribute('style','width:' + me._map_1.ggFloorplanWidth + 'px;height:' + me._map_1.ggFloorplanHeight + 'px;-webkit-user-drag:none;pointer-events:none;image-rendering:' + (mapDetails['crispedges'] ? image_rendering_prop : 'auto') + ';');
 		}
