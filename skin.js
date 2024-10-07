@@ -1,7 +1,7 @@
 // Garden Gnome Software - Skin
 // Pano2VR 7.1.4/20938
 // Filename: PMC.ggsk
-// Generated 2024-10-07T18:00:50
+// Generated 2024-10-07T18:05:54
 
 function pano2vrSkin(player,base) {
 	var me=this;
