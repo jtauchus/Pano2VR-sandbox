@@ -35,7 +35,7 @@
       <preview strip="1" color="0x808080"/>
     </input>
     <view fovmode="2" pannorth="0">
-      <start tilt="-15.24" projection="12" fov="100" pan="-0.22"/>
+      <start tilt="-13.64" projection="4" fov="127.48" pan="-14.05"/>
       <flyin tilt="-90" projection="9" fov="170" pan="0"/>
       <min tilt="-90" fovpixel="2" pan="0"/>
       <max tilt="90" scaletofit="1" fov="140" fovstereographic="330" pan="360" fovfisheye="360"/>
