@@ -1,7 +1,7 @@
 // Garden Gnome Software - Skin
 // Pano2VR 7.1.4/20938
 // Filename: PMC.ggsk
-// Generated 2024-10-08T10:21:36
+// Generated 2024-10-08T10:30:16
 
 function pano2vrSkin(player,base) {
 	var me=this;
@@ -141,13 +141,13 @@ function pano2vrSkin(player,base) {
 		}
 		me._container_1.ggUpdatePosition=function (useTransition) {
 		}
-		el=me._map_1=document.createElement('div');
+		el=me._map=document.createElement('div');
 		el.ggFilter = '';
 		el.ggFilteredIds = [];
 		el.ggMapLayers = [];
 		el.ggMapNotLoaded = true;
 		el.ggMapId = 'FloorPlan02';
-		el.ggId="Map 1";
+		el.ggId="Map";
 		el.ggParameter={ rx:0,ry:0,a:0,sx:1,sy:1,def:'' };
 		el.ggVisible=true;
 		el.className="ggskin ggskin_map ";
@@ -164,7 +164,7 @@ function pano2vrSkin(player,base) {
 		hs+='pointer-events:auto;';
 		el.setAttribute('style',hs);
 		el.style.transformOrigin='50% 50%';
-		me._map_1.ggIsActive=function() {
+		me._map.ggIsActive=function() {
 			if ((this.parentNode) && (this.parentNode.ggIsActive)) {
 				return this.parentNode.ggIsActive();
 			}
@@ -176,19 +176,19 @@ function pano2vrSkin(player,base) {
 			}
 			return player.getCurrentNode();
 		}
-		me._map_1.ggUpdateConditionResize=function () {
-			var mapDetails = player.getMapDetails(me._map_1.ggMapId);
+		me._map.ggUpdateConditionResize=function () {
+			var mapDetails = player.getMapDetails(me._map.ggMapId);
 			if (mapDetails.hasOwnProperty('title')) {
-				me._map_1.ggCalculateFloorplanSize(mapDetails);
-				me._map_1.ggShowSimpleFloorplan(mapDetails);
-				me._map_1.ggPlaceMarkersOnSimpleFloorplan();
+				me._map.ggCalculateFloorplanSize(mapDetails);
+				me._map.ggShowSimpleFloorplan(mapDetails);
+				me._map.ggPlaceMarkersOnSimpleFloorplan();
 			}
-			if (me._map_1.ggRadar) me._map_1.ggRadar.update();
+			if (me._map.ggRadar) me._map.ggRadar.update();
 		}
-		me._map_1.ggUpdatePosition=function (useTransition) {
-			me._map_1.ggUpdateConditionResize();
+		me._map.ggUpdatePosition=function (useTransition) {
+			me._map.ggUpdateConditionResize();
 		}
-		me._container_1.appendChild(me._map_1);
+		me._container_1.appendChild(me._map);
 		el=me._basement_button=document.createElement('div');
 		els=me._basement_button__text=document.createElement('div');
 		el.className='ggskin ggskin_textdiv';
@@ -243,10 +243,6 @@ function pano2vrSkin(player,base) {
 				return this.parentNode.ggElementNodeId();
 			}
 			return player.getCurrentNode();
-		}
-		me._basement_button.onclick=function (e) {
-			me._map_1.ggChangeMap("FloorPlan01");
-			me._map_1.ggChangeMap("FloorPlan03");
 		}
 		me._basement_button.ggUpdatePosition=function (useTransition) {
 		}
@@ -305,9 +301,6 @@ function pano2vrSkin(player,base) {
 			}
 			return player.getCurrentNode();
 		}
-		me._roof_button.onclick=function (e) {
-			me._map_1.ggChangeMap("FloorPlan02");
-		}
 		me._roof_button.ggUpdatePosition=function (useTransition) {
 		}
 		me._container_1.appendChild(me._roof_button);
@@ -365,9 +358,6 @@ function pano2vrSkin(player,base) {
 				return this.parentNode.ggElementNodeId();
 			}
 			return player.getCurrentNode();
-		}
-		me._ground_button.onclick=function (e) {
-			me._map_1.ggChangeMap("FloorPlan01");
 		}
 		me._ground_button.ggUpdatePosition=function (useTransition) {
 		}
@@ -430,33 +420,33 @@ function pano2vrSkin(player,base) {
 		me._map_toggle.ggUpdatePosition=function (useTransition) {
 		}
 		me.divSkin.appendChild(me._map_toggle);
-		me._map_1.ggMarkerInstances=[];
-		me._map_1.ggLastNodeId=null;
-		me._map_1.ggSimpleFloorplanMarkerArray=[];
-		me._map_1.ggFloorplanWidth=0;
-		me._map_1.ggFloorplanHeight=0;
-		me._map_1__mapdiv=document.createElement('div');
-		me._map_1__mapdiv.className='ggskin ggskin_map';
-		me._map_1.appendChild(me._map_1__mapdiv);
-		me._map_1__img=document.createElement('img');
-		me._map_1__img.className='ggskin ggskin_map';
-		me._map_1__mapdiv.appendChild(me._map_1__img);
-		me._map_1.ggRadar={ lastFov : -1, lastPan : -1, xPos : -1, yPos : -1, radarElement : null }
-		me._map_1.ggRadar.update=function() {
-			var radar=me._map_1.ggRadar;
+		me._map.ggMarkerInstances=[];
+		me._map.ggLastNodeId=null;
+		me._map.ggSimpleFloorplanMarkerArray=[];
+		me._map.ggFloorplanWidth=0;
+		me._map.ggFloorplanHeight=0;
+		me._map__mapdiv=document.createElement('div');
+		me._map__mapdiv.className='ggskin ggskin_map';
+		me._map.appendChild(me._map__mapdiv);
+		me._map__img=document.createElement('img');
+		me._map__img.className='ggskin ggskin_map';
+		me._map__mapdiv.appendChild(me._map__img);
+		me._map.ggRadar={ lastFov : -1, lastPan : -1, xPos : -1, yPos : -1, radarElement : null }
+		me._map.ggRadar.update=function() {
+			var radar=me._map.ggRadar;
 			var d2r = Math.PI/180 ;
 			var fov = player.getFov();
 			var pan = player.getPanNorth();
-			pan -= me._map_1.ggFloorplanNorth;
+			pan -= me._map.ggFloorplanNorth;
 			var filterpassed = true;
 			var currentId = player.getCurrentNode();
-			if (me._map_1.ggFilteredIds.length > 0 && me._map_1.ggFilteredIds.indexOf(currentId) == -1) filterpassed = false;
-			if ((me._map_1.ggSimpleFloorplanMarkerArray.hasOwnProperty(currentId)) && filterpassed) {
-				var activeMarker = me._map_1.ggSimpleFloorplanMarkerArray[currentId];
+			if (me._map.ggFilteredIds.length > 0 && me._map.ggFilteredIds.indexOf(currentId) == -1) filterpassed = false;
+			if ((me._map.ggSimpleFloorplanMarkerArray.hasOwnProperty(currentId)) && filterpassed) {
+				var activeMarker = me._map.ggSimpleFloorplanMarkerArray[currentId];
 				if ((radar.radarElement) && (fov==radar.lastFov) && (pan==radar.lastPan) && (activeMarker.radarXPos==radar.xPos) && (activeMarker.radarYPos==radar.yPos)) return; 
 				radar.lastPan=pan; radar.lastFov=fov;
 				radar.xPos=activeMarker.radarXPos; radar.yPos=activeMarker.radarYPos;
-				if (radar.radarElement) me._map_1__mapdiv.removeChild(radar.radarElement);
+				if (radar.radarElement) me._map__mapdiv.removeChild(radar.radarElement);
 				radar.radarElement = document.createElementNS('http://www.w3.org/2000/svg','svg');
 				radar.radarElement.setAttributeNS(null,'width',500);
 				radar.radarElement.setAttributeNS(null,'height',500);
@@ -481,23 +471,23 @@ function pano2vrSkin(player,base) {
 				radarPath.setAttributeNS(null,'stroke-width', 1);
 				radarPath.setAttributeNS(null,'stroke-linejoin', 'miter');
 				radar.radarElement.appendChild(radarPath);
-				me._map_1__mapdiv.appendChild(radar.radarElement);
+				me._map__mapdiv.appendChild(radar.radarElement);
 				var radarXPos = activeMarker.radarXPos - 250;
 				var radarYPos = activeMarker.radarYPos - 250;
 				radar.radarElement.style['position'] = 'absolute';
 				radar.radarElement.style['left'] = '' + radarXPos + 'px';
 				radar.radarElement.style['top'] = '' + radarYPos + 'px';
-				radar.radarElement.style['z-index'] = me._map_1.style['z-index'] + 1;
+				radar.radarElement.style['z-index'] = me._map.style['z-index'] + 1;
 			} else {
 				if (radar.radarElement) {
-					me._map_1__mapdiv.removeChild(radar.radarElement);
+					me._map__mapdiv.removeChild(radar.radarElement);
 					radar.radarElement = null;
 				}
 			}
 		}
-		me._map_1.ggShowSimpleFloorplan=function(mapDetails) {
-			var mapWidth = me._map_1.clientWidth;
-			var mapHeight = me._map_1.clientHeight;
+		me._map.ggShowSimpleFloorplan=function(mapDetails) {
+			var mapWidth = me._map.clientWidth;
+			var mapHeight = me._map.clientHeight;
 			var tmpWidth = mapDetails['width'];
 			var tmpHeight = mapDetails['height'];
 			var levelLimit = 1000;
@@ -515,96 +505,96 @@ function pano2vrSkin(player,base) {
 				levelLimit *= 2;
 				level++;
 			}
-			var imageFilename = basePath + 'images/maptiles/' + me._map_1.ggMapId + '_' + level + '.' + mapDetails['tileformat'];
-			me._map_1__img.setAttribute('src', imageFilename);
-			me._map_1__img.setAttribute('loading', 'lazy');
-		me._map_1__mapdiv.setAttribute('style','position: absolute; right: 0px; top: 0px;width:' + me._map_1.ggFloorplanWidth + 'px;height:' + me._map_1.ggFloorplanHeight + 'px;overflow:hidden;;');
+			var imageFilename = basePath + 'images/maptiles/' + me._map.ggMapId + '_' + level + '.' + mapDetails['tileformat'];
+			me._map__img.setAttribute('src', imageFilename);
+			me._map__img.setAttribute('loading', 'lazy');
+		me._map__mapdiv.setAttribute('style','position: absolute; right: 0px; top: 0px;width:' + me._map.ggFloorplanWidth + 'px;height:' + me._map.ggFloorplanHeight + 'px;overflow:hidden;;');
 		var image_rendering_prop = (player.getBrowser() == 2 || player.getBrowser() == 3) ? 'crisp-edges' : 'pixelated';
-		me._map_1__img.setAttribute('style','width:' + me._map_1.ggFloorplanWidth + 'px;height:' + me._map_1.ggFloorplanHeight + 'px;-webkit-user-drag:none;pointer-events:none;image-rendering:' + (mapDetails['crispedges'] ? image_rendering_prop : 'auto') + ';');
+		me._map__img.setAttribute('style','width:' + me._map.ggFloorplanWidth + 'px;height:' + me._map.ggFloorplanHeight + 'px;-webkit-user-drag:none;pointer-events:none;image-rendering:' + (mapDetails['crispedges'] ? image_rendering_prop : 'auto') + ';');
 		}
-		me._map_1.ggCalculateFloorplanSize=function(mapDetails) {
+		me._map.ggCalculateFloorplanSize=function(mapDetails) {
 			var floorplanWidth = mapDetails['width'];
 			var floorplanHeight = mapDetails['height'];
-			var frameAR = me._map_1.clientWidth / me._map_1.clientHeight;
+			var frameAR = me._map.clientWidth / me._map.clientHeight;
 			var floorplanAR = floorplanWidth / floorplanHeight;
 			if (frameAR > floorplanAR) {
-				me._map_1.ggFloorplanHeight = me._map_1.clientHeight;
-				me._map_1.ggFloorplanWidth = me._map_1.ggFloorplanHeight * floorplanAR;
+				me._map.ggFloorplanHeight = me._map.clientHeight;
+				me._map.ggFloorplanWidth = me._map.ggFloorplanHeight * floorplanAR;
 			} else {
-				me._map_1.ggFloorplanWidth = me._map_1.clientWidth;
-				me._map_1.ggFloorplanHeight = me._map_1.ggFloorplanWidth / floorplanAR;
+				me._map.ggFloorplanWidth = me._map.clientWidth;
+				me._map.ggFloorplanHeight = me._map.ggFloorplanWidth / floorplanAR;
 			}
 		}
-		me._map_1.ggInitMap=function() {
-			var mapDetails = player.getMapDetails(me._map_1.ggMapId);
+		me._map.ggInitMap=function() {
+			var mapDetails = player.getMapDetails(me._map.ggMapId);
 			if (Object.keys(mapDetails).length === 0) return;
-			me._map_1.style.backgroundColor = mapDetails['bgcolor'];
+			me._map.style.backgroundColor = mapDetails['bgcolor'];
 			if (mapDetails.hasOwnProperty('transparent') && mapDetails['transparent']) {
-				me._map_1.ggPermeableMap = true;
+				me._map.ggPermeableMap = true;
 			} else {
-				me._map_1.ggPermeableMap = false;
+				me._map.ggPermeableMap = false;
 			}
-			me._map_1.ggCalculateFloorplanSize(mapDetails);
-			me._map_1.ggShowSimpleFloorplan(mapDetails);
-			me._map_1.ggFloorplanNorth = mapDetails['floorplannorth'];
-			me._map_1.ggMapNotLoaded = false;
+			me._map.ggCalculateFloorplanSize(mapDetails);
+			me._map.ggShowSimpleFloorplan(mapDetails);
+			me._map.ggFloorplanNorth = mapDetails['floorplannorth'];
+			me._map.ggMapNotLoaded = false;
 		}
-		me._map_1.ggClearMap=function() {
-			me._map_1.ggClearMapMarkers();
-			me._map_1.ggMapNotLoaded = true;
+		me._map.ggClearMap=function() {
+			me._map.ggClearMapMarkers();
+			me._map.ggMapNotLoaded = true;
 		}
-		me._map_1.ggChangeMap=function(mapId) {
+		me._map.ggChangeMap=function(mapId) {
 			var newMapType = player.getMapType(mapId)
 			if (newMapType == 'web') {
 				return;
 			}
-			me._map_1.ggMapId = mapId;
-			if (!me._map_1.ggMapNotLoaded) {
-				me._map_1.ggClearMap();
-				me._map_1.ggInitMap();
-				me._map_1.ggInitMapMarkers();
+			me._map.ggMapId = mapId;
+			if (!me._map.ggMapNotLoaded) {
+				me._map.ggClearMap();
+				me._map.ggInitMap();
+				me._map.ggInitMapMarkers();
 			}
 		}
-		me._map_1.ggPlaceMarkersOnSimpleFloorplan=function() {
-			var markers=me._map_1.ggSimpleFloorplanMarkerArray;
+		me._map.ggPlaceMarkersOnSimpleFloorplan=function() {
+			var markers=me._map.ggSimpleFloorplanMarkerArray;
 			for (id in markers) {
 				if (markers.hasOwnProperty(id)) {
 					marker=markers[id];
-					var coords = player.getNodeMapCoordsInPercent(id, me._map_1.ggMapId);
-					var xPos = (me._map_1.ggFloorplanWidth * coords[0]) / 100.0;
-					var yPos = (me._map_1.ggFloorplanHeight * coords[1]) / 100.0;
+					var coords = player.getNodeMapCoordsInPercent(id, me._map.ggMapId);
+					var xPos = (me._map.ggFloorplanWidth * coords[0]) / 100.0;
+					var yPos = (me._map.ggFloorplanHeight * coords[1]) / 100.0;
 					marker.radarXPos = xPos;
 					marker.radarYPos = yPos;
-					xPos -= me._map_1.ggHMarkerAnchorOffset;
-					yPos -= me._map_1.ggVMarkerAnchorOffset;
+					xPos -= me._map.ggHMarkerAnchorOffset;
+					yPos -= me._map.ggVMarkerAnchorOffset;
 					marker.style['position'] = 'absolute';
 					marker.style['left'] = xPos + 'px';
 					marker.style['top'] = yPos + 'px';
-					marker.style['z-index'] = me._map_1.style['z-index'] + 2;
+					marker.style['z-index'] = me._map.style['z-index'] + 2;
 				}
 			}
 		}
-		me._map_1.ggInitMapMarkers=function() {
-			me._map_1.ggClearMapMarkers();
+		me._map.ggInitMapMarkers=function() {
+			me._map.ggClearMapMarkers();
 			var ids=player.getNodeIds();
-			me._map_1.ggFilteredIds = [];
-			if (me._map_1.ggFilter != '') {
-				var filter = me._map_1.ggFilter.split(',');
+			me._map.ggFilteredIds = [];
+			if (me._map.ggFilter != '') {
+				var filter = me._map.ggFilter.split(',');
 				for (i=0; i < ids.length; i++) {
 					var nodeId = ids[i];
 					var nodeData = player.getNodeUserdata(nodeId);
 					for (var j=0; j < filter.length; j++) {
-						if (nodeData['tags'].indexOf(filter[j].trim()) != -1) me._map_1.ggFilteredIds.push(nodeId);
+						if (nodeData['tags'].indexOf(filter[j].trim()) != -1) me._map.ggFilteredIds.push(nodeId);
 					}
 				}
-				if (me._map_1.ggFilteredIds.length > 0) ids = me._map_1.ggFilteredIds;
+				if (me._map.ggFilteredIds.length > 0) ids = me._map.ggFilteredIds;
 			}
 			for(var i=0; i < ids.length; i++) {
 				var id = ids[i];
-				var coords = player.getNodeMapCoordsInPercent(id, me._map_1.ggMapId);
+				var coords = player.getNodeMapCoordsInPercent(id, me._map.ggMapId);
 				if (coords.length>=2) {
-					me._map_1.ggHMarkerAnchorOffset = 20;
-					me._map_1.ggVMarkerAnchorOffset = 40;
+					me._map.ggHMarkerAnchorOffset = 20;
+					me._map.ggVMarkerAnchorOffset = 40;
 					var marker = document.createElement('img');
 					marker.setAttribute('src', basePath + 'images/_ggMapPin.png');
 					marker.setAttribute('title', player.getNodeTitle(id));
@@ -615,58 +605,58 @@ function pano2vrSkin(player,base) {
 					marker.onclick = function() {
 						player.openNext('{' + this.ggId + '}');
 					}
-					me._map_1.ggSimpleFloorplanMarkerArray[id] = marker;
-					me._map_1__mapdiv.appendChild(marker);
+					me._map.ggSimpleFloorplanMarkerArray[id] = marker;
+					me._map__mapdiv.appendChild(marker);
 				}
 			}
-			me._map_1.ggPlaceMarkersOnSimpleFloorplan();
-			skin.updateSize(me._map_1);
+			me._map.ggPlaceMarkersOnSimpleFloorplan();
+			skin.updateSize(me._map);
 		}
-		me._map_1.ggClearMapMarkers=function() {
-			for (id in me._map_1.ggSimpleFloorplanMarkerArray) {
-				if (me._map_1.ggSimpleFloorplanMarkerArray.hasOwnProperty(id)) {
-					me._map_1__mapdiv.removeChild(me._map_1.ggSimpleFloorplanMarkerArray[id]);
+		me._map.ggClearMapMarkers=function() {
+			for (id in me._map.ggSimpleFloorplanMarkerArray) {
+				if (me._map.ggSimpleFloorplanMarkerArray.hasOwnProperty(id)) {
+					me._map__mapdiv.removeChild(me._map.ggSimpleFloorplanMarkerArray[id]);
 				}
 			}
-			me._map_1.ggMarkerInstances=[];
-			me._map_1.ggSimpleFloorplanMarkerArray=[];
+			me._map.ggMarkerInstances=[];
+			me._map.ggSimpleFloorplanMarkerArray=[];
 		}
 		player.addListener('changenode', function(event) {
-			var mapDetails = player.getMapDetails(me._map_1.ggMapId);
+			var mapDetails = player.getMapDetails(me._map.ggMapId);
 			if (mapDetails.hasOwnProperty('title')) {
-				me._map_1.ggCalculateFloorplanSize(mapDetails);
-				me._map_1.ggShowSimpleFloorplan(mapDetails);
-				me._map_1.ggPlaceMarkersOnSimpleFloorplan();
+				me._map.ggCalculateFloorplanSize(mapDetails);
+				me._map.ggShowSimpleFloorplan(mapDetails);
+				me._map.ggPlaceMarkersOnSimpleFloorplan();
 			}
-			if (me._map_1.ggRadar) me._map_1.ggRadar.update();
-			if (me._map_1.ggLastNodeId) {
-				var lastActiveMarker = me._map_1.ggSimpleFloorplanMarkerArray[me._map_1.ggLastNodeId];
+			if (me._map.ggRadar) me._map.ggRadar.update();
+			if (me._map.ggLastNodeId) {
+				var lastActiveMarker = me._map.ggSimpleFloorplanMarkerArray[me._map.ggLastNodeId];
 				if (lastActiveMarker && lastActiveMarker.ggDeactivate) lastActiveMarker.ggDeactivate();
 			}
 			var id = player.getCurrentNode();
-			var marker = me._map_1.ggSimpleFloorplanMarkerArray[id];
+			var marker = me._map.ggSimpleFloorplanMarkerArray[id];
 			if (marker) {
 				if (marker.ggActivate) marker.ggActivate();
 			}
-			if (player.getMapType(me._map_1.ggMapId) == 'file') {
-				var coords = player.getNodeMapCoords(id, me._map_1.ggMapId);
+			if (player.getMapType(me._map.ggMapId) == 'file') {
+				var coords = player.getNodeMapCoords(id, me._map.ggMapId);
 				if (coords.length < 2) {
 					var mapId = player.getMapContainingNode(id);
 					if (mapId != '') {
-							me._map_1.ggChangeMap(mapId);
+							me._map.ggChangeMap(mapId);
 					}
 				}
 			}
-			me._map_1.ggLastNodeId = id;
-			me._map_1.ggRadar.update();
+			me._map.ggLastNodeId = id;
+			me._map.ggRadar.update();
 		});
 		player.addListener('configloaded', function(event) {
-			me._map_1.ggClearMap();
-			me._map_1.ggInitMap(false);
-			me._map_1.ggInitMapMarkers(true);
+			me._map.ggClearMap();
+			me._map.ggInitMap(false);
+			me._map.ggInitMapMarkers(true);
 		});
 		player.addListener('positionchanged', function(event) {
-			me._map_1.ggRadar.update();
+			me._map.ggRadar.update();
 		});
 	};
 	player.addListener('changenode', function() {
