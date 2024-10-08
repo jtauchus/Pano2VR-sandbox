@@ -1,7 +1,7 @@
 // Garden Gnome Software - Skin
 // Pano2VR 7.1.4/20938
 // Filename: PMC.ggsk
-// Generated 2024-10-08T08:31:58
+// Generated 2024-10-08T08:37:19
 
 function pano2vrSkin(player,base) {
 	var me=this;
@@ -176,7 +176,17 @@ function pano2vrSkin(player,base) {
 			}
 			return player.getCurrentNode();
 		}
+		me._map_1.ggUpdateConditionResize=function () {
+			var mapDetails = player.getMapDetails(me._map_1.ggMapId);
+			if (mapDetails.hasOwnProperty('title')) {
+				me._map_1.ggCalculateFloorplanSize(mapDetails);
+				me._map_1.ggShowSimpleFloorplan(mapDetails);
+				me._map_1.ggPlaceMarkersOnSimpleFloorplan();
+			}
+			if (me._map_1.ggRadar) me._map_1.ggRadar.update();
+		}
 		me._map_1.ggUpdatePosition=function (useTransition) {
+			me._map_1.ggUpdateConditionResize();
 		}
 		me._container_1.appendChild(me._map_1);
 		el=me._basement_button=document.createElement('div');
@@ -422,295 +432,159 @@ function pano2vrSkin(player,base) {
 		me.divSkin.appendChild(me._map_toggle);
 		me._map_1.ggMarkerInstances=[];
 		me._map_1.ggLastNodeId=null;
-		me._map_1.ggMarkerArray=[];
-		me._map_1.ggGoogleMarkerArray=[];
-		me._map_1.ggLastZoom = -1;
-		me._map_1.ggLastLat = 0.0;
-		me._map_1.ggLastLng = 0.0;
-		me._map_1.ggRadar={ lastFov : -1, lastPan : -1, lastZoom : -1,activeNodeLatLng : null, poly : null }
+		me._map_1.ggSimpleFloorplanMarkerArray=[];
+		me._map_1.ggFloorplanWidth=0;
+		me._map_1.ggFloorplanHeight=0;
+		me._map_1__mapdiv=document.createElement('div');
+		me._map_1__mapdiv.className='ggskin ggskin_map';
+		me._map_1.appendChild(me._map_1__mapdiv);
+		me._map_1__img=document.createElement('img');
+		me._map_1__img.className='ggskin ggskin_map';
+		me._map_1__mapdiv.appendChild(me._map_1__img);
+		me._map_1.ggRadar={ lastFov : -1, lastPan : -1, xPos : -1, yPos : -1, radarElement : null }
 		me._map_1.ggRadar.update=function() {
 			var radar=me._map_1.ggRadar;
-			var map=me._map_1.ggMap;
-			if (!map) return;
 			var d2r = Math.PI/180 ;
-			var r2d = 180/Math.PI ;
 			var fov = player.getFov();
 			var pan = player.getPanNorth();
-			var zoom = map.getZoom();
-			var gps;
-			if (player.getMapType(me._map_1.ggMapId) == 'web') {
-				gps=player.getNodeLatLng();
-			} else {
-				gps=player.getNodeMapCoords(null, me._map_1.ggMapId);
-				pan -= me._map_1.ggFloorplanNorth;
-			}
+			pan -= me._map_1.ggFloorplanNorth;
 			var filterpassed = true;
 			var currentId = player.getCurrentNode();
 			if (me._map_1.ggFilteredIds.length > 0 && me._map_1.ggFilteredIds.indexOf(currentId) == -1) filterpassed = false;
-			if ((gps.length>=2) && ((gps[0]!=0) || (gps[1]!=0)) && filterpassed) {
-				if (zoom<6) zoom = 6; // avoid large radar beams on world map
-				if ((radar.poly) && (fov==radar.lastFov) && (pan==radar.lastPan) && (zoom==radar.lastZoom) && (gps[0]==radar.activeNodeLatLng.lat) && (gps[1]==radar.activeNodeLatLng.lng)) return; 
-				radar.lastPan=pan;radar.lastFov=fov;radar.lastZoom=zoom;
-				radar.activeNodeLatLng = L.latLng(gps[0], gps[1]);
-				var tileDeg = 360.0 / Math.pow(2, zoom);
-				var rLng = tileDeg * 0.976563;
-				var rLat = rLng * Math.cos(radar.activeNodeLatLng.lat * d2r);
-				var radar_path = [];
-				radar_path.push(radar.activeNodeLatLng);
-				var segments=8;
-				for (i=-segments; i<=segments; i++) {
-					var angle = (fov / (2*segments)) * i;
-					var x = -rLng * Math.sin((pan+angle)*d2r) + radar.activeNodeLatLng.lng;
-					var y =  rLat * Math.cos((pan+angle)*d2r) + radar.activeNodeLatLng.lat;
-					radar_path.push(L.latLng(y, x));
-				}
-				if (radar.poly) {
-					radar.poly.removeFrom(map);
-					radar.poly = null;
-				}
-				radar.poly = L.polygon(radar_path, {
-					color: '#ff0000',
-					opacity: 0.8,
-					weight: 1,
-					fill: true,
-					fillColor: '#ff0000',
-					fillOpacity: 0.35
-				}).addTo(map);
+			if ((me._map_1.ggSimpleFloorplanMarkerArray.hasOwnProperty(currentId)) && filterpassed) {
+				var activeMarker = me._map_1.ggSimpleFloorplanMarkerArray[currentId];
+				if ((radar.radarElement) && (fov==radar.lastFov) && (pan==radar.lastPan) && (activeMarker.radarXPos==radar.xPos) && (activeMarker.radarYPos==radar.yPos)) return; 
+				radar.lastPan=pan; radar.lastFov=fov;
+				radar.xPos=activeMarker.radarXPos; radar.yPos=activeMarker.radarYPos;
+				if (radar.radarElement) me._map_1__mapdiv.removeChild(radar.radarElement);
+				radar.radarElement = document.createElementNS('http://www.w3.org/2000/svg','svg');
+				radar.radarElement.setAttributeNS(null,'width',500);
+				radar.radarElement.setAttributeNS(null,'height',500);
+				radar.radarElement.setAttributeNS(null,'viewBox','0 0 500 500');
+				var radarPath = document.createElementNS('http://www.w3.org/2000/svg','path');
+				radarPath.setAttributeNS(null,'id','radarPath');
+				pan = -90 - pan;
+				var arcX1 = 250 * Math.cos((pan - fov / 2) * d2r);
+				var arcY1 = 250 * Math.sin((pan - fov / 2) * d2r);
+				var arcX2 = 250 * Math.cos((pan + fov / 2) * d2r);
+				var arcY2 = 250 * Math.sin((pan + fov / 2) * d2r);
+				arcX1 += 250;
+				arcY1 += 250;
+				arcX2 += 250;
+				arcY2 += 250;
+				var radarPathString = 'M250,250 L' + arcX1 + ',' + arcY1 + ' A 250 250 0 0 1 ' + arcX2 + ' ' + arcY2 +' Z';
+				radarPath.setAttributeNS(null,'d', radarPathString);
+				radarPath.setAttributeNS(null,'fill', '#ff0000');
+				radarPath.setAttributeNS(null,'fill-opacity', 0.35);
+				radarPath.setAttributeNS(null,'stroke', '#ff0000');
+				radarPath.setAttributeNS(null,'stroke-opacity', 0.8);
+				radarPath.setAttributeNS(null,'stroke-width', 1);
+				radarPath.setAttributeNS(null,'stroke-linejoin', 'miter');
+				radar.radarElement.appendChild(radarPath);
+				me._map_1__mapdiv.appendChild(radar.radarElement);
+				var radarXPos = activeMarker.radarXPos - 250;
+				var radarYPos = activeMarker.radarYPos - 250;
+				radar.radarElement.style['position'] = 'absolute';
+				radar.radarElement.style['left'] = '' + radarXPos + 'px';
+				radar.radarElement.style['top'] = '' + radarYPos + 'px';
+				radar.radarElement.style['z-index'] = me._map_1.style['z-index'] + 1;
 			} else {
-				if (radar) {
-					activeNodeLatLng = L.latLng(0,0);
-					if (radar.poly) {
-						radar.poly.removeFrom(map);
-						radar.poly = null;
-					}
+				if (radar.radarElement) {
+					me._map_1__mapdiv.removeChild(radar.radarElement);
+					radar.radarElement = null;
 				}
 			}
 		}
-		me._map_1.ggTileAvailable=function(x, y, z) {
+		me._map_1.ggShowSimpleFloorplan=function(mapDetails) {
+			var mapWidth = me._map_1.clientWidth;
+			var mapHeight = me._map_1.clientHeight;
+			var tmpWidth = mapDetails['width'];
+			var tmpHeight = mapDetails['height'];
+			var levelLimit = 1000;
+			var levels = 1;
+			while (levelLimit < mapDetails['width'] || levelLimit < mapDetails['height']) {
+				tmpWidth /= 2;
+				tmpHeight /= 2;
+				levelLimit *= 2;
+				levels++;
+			}
+			var level = 1;
+			while (levels > level && ((mapWidth * window.devicePixelRatio) >= 2*tmpWidth || (mapHeight * window.devicePixelRatio) >= 2*tmpHeight)) {
+				tmpWidth *= 2;
+				tmpHeight *= 2;
+				levelLimit *= 2;
+				level++;
+			}
+			var imageFilename = basePath + 'images/maptiles/' + me._map_1.ggMapId + '_' + level + '.' + mapDetails['tileformat'];
+			me._map_1__img.setAttribute('src', imageFilename);
+			me._map_1__img.setAttribute('loading', 'lazy');
+		me._map_1__mapdiv.setAttribute('style','position: absolute; right: 0px; top: 0px;width:' + me._map_1.ggFloorplanWidth + 'px;height:' + me._map_1.ggFloorplanHeight + 'px;overflow:hidden;;');
+		var image_rendering_prop = (player.getBrowser() == 2 || player.getBrowser() == 3) ? 'crisp-edges' : 'pixelated';
+		me._map_1__img.setAttribute('style','width:' + me._map_1.ggFloorplanWidth + 'px;height:' + me._map_1.ggFloorplanHeight + 'px;-webkit-user-drag:none;pointer-events:none;image-rendering:' + (mapDetails['crispedges'] ? image_rendering_prop : 'auto') + ';');
+		}
+		me._map_1.ggCalculateFloorplanSize=function(mapDetails) {
+			var floorplanWidth = mapDetails['width'];
+			var floorplanHeight = mapDetails['height'];
+			var frameAR = me._map_1.clientWidth / me._map_1.clientHeight;
+			var floorplanAR = floorplanWidth / floorplanHeight;
+			if (frameAR > floorplanAR) {
+				me._map_1.ggFloorplanHeight = me._map_1.clientHeight;
+				me._map_1.ggFloorplanWidth = me._map_1.ggFloorplanHeight * floorplanAR;
+			} else {
+				me._map_1.ggFloorplanWidth = me._map_1.clientWidth;
+				me._map_1.ggFloorplanHeight = me._map_1.ggFloorplanWidth / floorplanAR;
+			}
+		}
+		me._map_1.ggInitMap=function() {
 			var mapDetails = player.getMapDetails(me._map_1.ggMapId);
-			if (z < 7 || z > 7 + (mapDetails['zoomlevels'] - 1)) return false;
-			var mapAR = mapDetails['width'] / mapDetails['height'];
-			if (mapDetails['width'] >= mapDetails['height']) {
-			var tilesInX = Math.pow(2, z - 7);
-			var tilesInY = Math.ceil(tilesInX / mapAR);
+			if (Object.keys(mapDetails).length === 0) return;
+			me._map_1.style.backgroundColor = mapDetails['bgcolor'];
+			if (mapDetails.hasOwnProperty('transparent') && mapDetails['transparent']) {
+				me._map_1.ggPermeableMap = true;
 			} else {
-				var tilesInY = Math.pow(2, z - 7);
-				var tilesInX = Math.ceil(tilesInY * mapAR);
+				me._map_1.ggPermeableMap = false;
 			}
-			var tilesXStart = Math.pow(2, z - 1);
-			var tilesYStart = tilesXStart;
-			var tilesXEnd = tilesXStart + tilesInX - 1;
-			var tilesYEnd = tilesYStart + tilesInY - 1;
-			if (x < tilesXStart || x > tilesXEnd || y < tilesYStart || y > tilesYEnd) return false;
-			return true;
-		}
-		me._map_1.ggSetLayer=function(layerIndex) {
-			if (typeof me._map_1.ggMapLayers === 'object' && me._map_1.ggMapLayers !== null && layerIndex >= 0 && layerIndex < Object.keys(me._map_1.ggMapLayers).length) {
-				me._map_1.ggMap.removeLayer(me._map_1.ggCurMap);
-				me._map_1.ggCurMap = me._map_1.ggMapLayers[Object.keys(me._map_1.ggMapLayers)[layerIndex]];
-				me._map_1.ggMap.addLayer(me._map_1.ggCurMap);
-			}
-		}
-		me._map_1.ggInitMap=function(keepZoom) {
-			var mapType = player.getMapType(me._map_1.ggMapId);
-			var mapDetails = player.getMapDetails(me._map_1.ggMapId);
-			if (!me._map_1.ggMapId) return;
-			if (!me._map_1.ggMapId.startsWith('google') && Object.keys(mapDetails).length === 0) return;
-			if (mapType == 'file') {
-				me._map_1.style.backgroundColor = mapDetails['bgcolor'];
-				me._map_1.ggFloorplanNorth = mapDetails['floorplannorth'];
-			} else {
-				me._map_1.style.backgroundColor = '#fff';
-			}
-			var gps;
-			if (player.getMapType(me._map_1.ggMapId) == 'web') {
-				gps=player.getNodeLatLng();
-			} else {
-				gps=player.getNodeMapCoords(null, me._map_1.ggMapId);
-			}
-			if ((gps.length>=2) && ((gps[0]!=0) || (gps[1]!=0))) {
-				activeNodeLatLng = L.latLng(gps[0], gps[1]);
-			} else {
-				activeNodeLatLng = L.latLng(me._map_1.ggLastLat, me._map_1.ggLastLng);
-			}
-			if (mapType == 'web') {
-				if (me._map_1.ggLastZoom == -1) me._map_1.ggLastZoom = 14;
-				var initZoom = keepZoom ? me._map_1.ggLastZoom : 14;
-				var maxZoom = ((mapDetails['mapprovider'] == 'openstreetmap') && (mapDetails['mapstyle'] == 'outdoors')) ? 17 : 18;
-				if (mapDetails['mapprovider'] == 'custom') maxZoom = mapDetails['mapmaxzoom'];
-				var mapOptions = {
-					zoom: initZoom,
-					zoomControl: true,
-					maxBoundsViscosity: 1.0,
-					attributionControl: false,
-					maxZoom: maxZoom
-				};
-				me._map_1.ggMap = L.map(me._map_1, mapOptions).setView(activeNodeLatLng, initZoom);
-				if (mapDetails.hasOwnProperty('maplimits') && (mapDetails['maplimits'].length == 4)) {
-					var maxBounds = [
-						[parseFloat(mapDetails['maplimits'][0]), parseFloat(mapDetails['maplimits'][1])],
-						[parseFloat(mapDetails['maplimits'][2]), parseFloat(mapDetails['maplimits'][3])]
-					];
-					me._map_1.ggMap.setMaxBounds(maxBounds);
-					me._map_1.ggMap.setMinZoom(me._map_1.ggMap.getBoundsZoom(maxBounds) - 1);
-				}
-				if (mapDetails['mapprovider'] == 'openstreetmap') {
-					if (mapDetails['mapstyle'] == 'streets') {
-						L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{}).addTo(me._map_1.ggMap);
-					} else if (mapDetails['mapstyle'] == 'outdoors') {
-						L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',{}).addTo(me._map_1.ggMap);
-					}
-				} else if (mapDetails['mapprovider'] == 'mapbox') {
-					if (mapDetails.hasOwnProperty('mapboxlayerstyleurls')) {
-						me._map_1.ggMapLayers = {};
-						var firstCustMap;
-						for (var layerIndex = 0; layerIndex < mapDetails['mapboxlayerstyleurls'].length; layerIndex++) {
-						var layerStyle = mapDetails['mapboxlayerstyleurls'][layerIndex];
-						var custMap;
-						if (!layerStyle.startsWith('mapbox:')) {
-							if (layerStyle == 'satellite') {
-								custMap = L.tileLayer('https://api.mapbox.com/v4/mapbox.' + layerStyle + '/{z}/{x}/{y}@2x.png?access_token=' + mapDetails['mapkey'], {}); 
-							} else {
-								custMap = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/' + layerStyle +  '-v11/tiles/{z}/{x}/{y}@2x?access_token=' + mapDetails["mapkey"], { tileSize: 512, zoomOffset: -1 });
-							}
-						} else {
-							layerStyle = layerStyle.slice(layerStyle.indexOf('styles/') + 7);
-							custMap = L.tileLayer('https://api.mapbox.com/styles/v1/' + layerStyle + '/tiles/256/{z}/{x}/{y}@2x?access_token=' + mapDetails["mapkey"],{});
-						}
-							me._map_1.ggMapLayers[mapDetails['mapboxlayernames'][layerIndex]] = custMap;
-							if (layerIndex == 0) {
-								me._map_1.ggCurMap = custMap;
-							}
-						}
-						var overlayMaps = {};
-						L.control.layers(me._map_1.ggMapLayers, overlayMaps).addTo(me._map_1.ggMap);
-						me._map_1.ggCurMap.addTo(me._map_1.ggMap);
-					} else {
-						var styleUrl = mapDetails['styleurl'];
-						var layer;
-						if (styleUrl == '') {
-							if (mapDetails['mapstyle'] == 'satellite') {
-								layer = L.tileLayer('https://api.mapbox.com/v4/mapbox.' + mapDetails['mapstyle'] +  '/{z}/{x}/{y}@2x.png?access_token=' + mapDetails['mapkey'],{});
-							} else {
-								layer = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/' + mapDetails['mapstyle'] +  '-v11/tiles/{z}/{x}/{y}@2x?access_token=' + mapDetails["mapkey"], { tileSize: 512, zoomOffset: -1 });;
-							}
-						} else {
-							styleUrl = styleUrl.slice(styleUrl.indexOf('styles/') + 7);
-							layer = L.tileLayer('https://api.mapbox.com/styles/v1/' + styleUrl + '/tiles/256/{z}/{x}/{y}@2x?access_token=' + mapDetails["mapkey"],{});;
-						}
-						layer.addTo(me._map_1.ggMap);
-					}
-				} else if (mapDetails['mapprovider'] == 'custom') {
-					if (mapDetails.hasOwnProperty('customlayerurltemplates')) {
-						me._map_1.ggMapLayers = {};
-						var firstCustMap;
-						for (var layerIndex = 0; layerIndex < mapDetails['customlayerurltemplates'].length; layerIndex++) {
-							var custMap = L.tileLayer(mapDetails['customlayerurltemplates'][layerIndex], { maxZoom: parseInt(mapDetails['customlayermaxzooms'][layerIndex])});
-							me._map_1.ggMapLayers[mapDetails['customlayernames'][layerIndex]] = custMap;
-							if (layerIndex == 0) {
-								me._map_1.ggCurMap = custMap;
-							}
-						}
-						var overlayMaps = {};
-						L.control.layers(me._map_1.ggMapLayers, overlayMaps).addTo(me._map_1.ggMap);
-						me._map_1.ggCurMap.addTo(me._map_1.ggMap);
-						me._map_1.ggMap.on('baselayerchange', function(event) {
-							me._map_1.ggMap.setMaxZoom(mapDetails['customlayermaxzooms'][mapDetails['customlayernames'].indexOf(event.name)]);
-						});
-					} else {
-						L.tileLayer(mapDetails['mapurltemplate'],{ maxZoom: mapDetails['mapmaxzoom']}).addTo(me._map_1.ggMap);
-					}
-				}
-				me._map_1.ggMap.on('zoom', function() {
-					me._map_1.ggRadar.update();
-				});
-			} else if (mapType == 'file') {
-				me._map_1.ggCalculateFloorplanDimInDeg(mapDetails);
-				var mapCenter = activeNodeLatLng;
-				if (mapCenter.lat == 0.0 && mapCenter.lng == 0.0) {
-					mapCenter.lat = -me._map_1.mapHeightInDeg / 2;
-					mapCenter.lng = me._map_1.mapWidthInDeg / 2;
-				}
-				if (me._map_1.ggLastZoom == -1) me._map_1.ggLastZoom = 7;
-				var initZoom = keepZoom ? me._map_1.ggLastZoom : 7;
-				var mapOptions = {
-					zoom: initZoom,
-					minZoom: 7,
-					maxZoom: 7 + (mapDetails['zoomlevels'] - 1) + 0,
-					center: mapCenter,
-					zoomControls: true,
-					attributionControl: false
-				};
-				me._map_1.ggMap = L.map(me._map_1, mapOptions).setView(activeNodeLatLng, initZoom);
-				var MapLayer = L.TileLayer.extend({
-					getTileUrl: function(coords){
-						if (me._map_1.ggTileAvailable(coords.x, coords.y, coords.z)) {
-							return basePath + 'images/maptiles/' + me._map_1.ggMapId + '/' + coords.z + '/' + coords.x + '_' + coords.y + '.' + mapDetails['tileformat'];
-						} else {
-							return '';
-						}
-					}
-				});
-				var mapLayer = new MapLayer();
-				mapLayer.addTo(me._map_1.ggMap);
-				me._map_1.ggMap.on('move zoom', function() {
-					me._map_1.ggCheckBounds(mapDetails);
-					me._map_1.ggRadar.update();
-				});
-				me._map_1.ggCheckBounds(mapDetails);
-			}
+			me._map_1.ggCalculateFloorplanSize(mapDetails);
+			me._map_1.ggShowSimpleFloorplan(mapDetails);
+			me._map_1.ggFloorplanNorth = mapDetails['floorplannorth'];
 			me._map_1.ggMapNotLoaded = false;
 		}
 		me._map_1.ggClearMap=function() {
-		me._map_1.ggClearMapMarkers();
-		if (me._map_1.ggMap) me._map_1.ggMap.remove();
-		me._map_1.ggMap = null;
-		me._map_1.ggMapNotLoaded = true;
+			me._map_1.ggClearMapMarkers();
+			me._map_1.ggMapNotLoaded = true;
 		}
-		me._map_1.ggClearMapMarkers=function() {
-			me._map_1.ggLastActivMarker = null;
-			var id,marker;
-			var markers=me._map_1.ggGoogleMarkerArray;
+		me._map_1.ggChangeMap=function(mapId) {
+			var newMapType = player.getMapType(mapId)
+			if (newMapType == 'web') {
+				return;
+			}
+			me._map_1.ggMapId = mapId;
+			if (!me._map_1.ggMapNotLoaded) {
+				me._map_1.ggClearMap();
+				me._map_1.ggInitMap();
+				me._map_1.ggInitMapMarkers();
+			}
+		}
+		me._map_1.ggPlaceMarkersOnSimpleFloorplan=function() {
+			var markers=me._map_1.ggSimpleFloorplanMarkerArray;
 			for (id in markers) {
 				if (markers.hasOwnProperty(id)) {
 					marker=markers[id];
-					marker.removeFrom(me._map_1.ggMap);
-				}
-			}
-			me._map_1.ggGoogleMarkerArray=[];
-		}
-		me._map_1.ggCenterNode=function(nodeId) {
-			if (!me._map_1.ggMap) return;
-			var gps;
-			if (player.getMapType(me._map_1.ggMapId) == 'web') {
-				gps=player.getNodeLatLng(nodeId);
-			} else {
-				gps=player.getNodeMapCoords(nodeId, me._map_1.ggMapId);
-			}
-			if ((gps.length>=2) && ((gps[0]!=0) || (gps[1]!=0))) {
-				var markerLocation = L.latLng(gps[0], gps[1]);
-				me._map_1.ggMap.panTo(markerLocation, {animate: false});
-			}
-		}
-		me._map_1.ggFitBounds=function(force) {
-			if (me._map_1.ggMapNotLoaded) return;
-			if (!me._map_1.ggMap) return;
-			if (me._map_1.ggMarkerBounds.isValid()) {
-				if (me._map_1.ggMarkerInstances.length > 1 || Object.getOwnPropertyNames(me._map_1.ggGoogleMarkerArray).length > 1) {
-					me._map_1.ggMap.zoomOut(1, {animate: false});
-					me._map_1.ggMap.fitBounds(me._map_1.ggMarkerBounds, {padding: [30, 30], animate: false});
-				} else {
-					me._map_1.ggMap.setView(me._map_1.ggMarkerBounds.getCenter(), me._map_1.ggMap.getZoom());
-					if (player.getMapType(me._map_1.ggMapId) == 'web') {
-						me._map_1.ggMap.setZoom(18);
-					} else {
-						me._map_1.ggMap.setZoom(7);
-					}
+					var coords = player.getNodeMapCoordsInPercent(id, me._map_1.ggMapId);
+					var xPos = (me._map_1.ggFloorplanWidth * coords[0]) / 100.0;
+					var yPos = (me._map_1.ggFloorplanHeight * coords[1]) / 100.0;
+					marker.radarXPos = xPos;
+					marker.radarYPos = yPos;
+					xPos -= me._map_1.ggHMarkerAnchorOffset;
+					yPos -= me._map_1.ggVMarkerAnchorOffset;
+					marker.style['position'] = 'absolute';
+					marker.style['left'] = xPos + 'px';
+					marker.style['top'] = yPos + 'px';
+					marker.style['z-index'] = me._map_1.style['z-index'] + 2;
 				}
 			}
 		}
-		me._map_1.ggInitMapMarkers=function(updateMapBounds) {
-			if (!me._map_1.ggMap) return;
+		me._map_1.ggInitMapMarkers=function() {
 			me._map_1.ggClearMapMarkers();
 			var ids=player.getNodeIds();
 			me._map_1.ggFilteredIds = [];
@@ -725,125 +599,54 @@ function pano2vrSkin(player,base) {
 				}
 				if (me._map_1.ggFilteredIds.length > 0) ids = me._map_1.ggFilteredIds;
 			}
-			var marker;
-			var markerLocation;
-			me._map_1.ggMarkerBounds = L.latLngBounds();
-			var currentId = player.getCurrentNode();
-			for(var i=0;i<ids.length;i++) {
-				var id=ids[i];
-				var gps;
-				if (player.getMapType(me._map_1.ggMapId) == 'web') {
-					gps=player.getNodeLatLng(id);
-				} else {
-					gps=player.getNodeMapCoords(id, me._map_1.ggMapId);
-				}
-				if ((gps.length>=2) && ((gps[0]!=0) || (gps[1]!=0))) {
-					markerLocation = L.latLng(gps[0], gps[1]);
-					var mapIcon = L.icon({iconUrl: basePath + 'images/_ggMapPin.png', iconRetinaUrl: basePath + 'images/_ggMapPin.png', iconSize : [40, 40], iconAnchor: [20, 40]});
-					marker = L.marker(markerLocation, {title: player.getNodeTitle(id), icon: mapIcon});
-					marker.ggId=id;
-					marker.on('click', function() {
+			for(var i=0; i < ids.length; i++) {
+				var id = ids[i];
+				var coords = player.getNodeMapCoordsInPercent(id, me._map_1.ggMapId);
+				if (coords.length>=2) {
+					me._map_1.ggHMarkerAnchorOffset = 20;
+					me._map_1.ggVMarkerAnchorOffset = 40;
+					var marker = document.createElement('img');
+					marker.setAttribute('src', basePath + 'images/_ggMapPin.png');
+					marker.setAttribute('title', player.getNodeTitle(id));
+					marker.style['width'] = '40px';
+					marker.style['width'] = '40px';
+					marker.style['cursor'] = 'pointer';
+					marker.ggId = id;
+					marker.onclick = function() {
 						player.openNext('{' + this.ggId + '}');
-						activeNodeLatLng=me.position;
-						lastFov=-1; // force radar update
-					});
-					marker.addTo(me._map_1.ggMap);
-					me._map_1.ggGoogleMarkerArray[id] = marker;
-					me._map_1.ggMarkerBounds.extend(markerLocation);
+					}
+					me._map_1.ggSimpleFloorplanMarkerArray[id] = marker;
+					me._map_1__mapdiv.appendChild(marker);
 				}
 			}
-			if (ids.length > 1 && me._map_1.ggMarkerBounds.isValid() && updateMapBounds) {
-				me._map_1.ggFitBounds(false);
-			}
+			me._map_1.ggPlaceMarkersOnSimpleFloorplan();
 			skin.updateSize(me._map_1);
-			this.ggLastActivMarker = null;
-			if (this.ggUpdateConditionNodeChange) this.ggUpdateConditionNodeChange();
-			this.ggRadar.lastFov = -1;
-			this.ggRadar.update();
 		}
-		me._map_1.ggChangeMap=function(mapId) {
-			var newMapType = player.getMapType(mapId)
-			if (newMapType == 'web') {
-				return;
-			}
-			me._map_1.ggMapId = mapId;
-			if (!me._map_1.ggMapNotLoaded) {
-				me._map_1.ggLastZoom = me._map_1.ggMap.getZoom();
-				me._map_1.ggLastLat = me._map_1.ggMap.getCenter().lat;
-				me._map_1.ggLastLng = me._map_1.ggMap.getCenter().lng;
-				me._map_1.ggClearMap();
-				me._map_1.ggInitMap(true);
-				me._map_1.ggInitMapMarkers(false);
-				var mapDetails = player.getMapDetails(me._map_1.ggMapId);
-				me._map_1.ggCalculateFloorplanDimInDeg(mapDetails);
-				me._map_1.ggCheckBounds(mapDetails);
-			}
-		}
-		me._map_1.ggCalculateFloorplanDimInDeg=function(mapDetails) {
-			var mapAR = mapDetails['width'] / mapDetails['height'];
-			var tileInDeg = 360.0 / Math.pow(2, 7);
-			if (mapDetails['width'] >= mapDetails['height']) {
-				var tmpWidth = mapDetails['width'];
-				while (tmpWidth > 256) {
-					tmpWidth /= 2;
+		me._map_1.ggClearMapMarkers=function() {
+			for (id in me._map_1.ggSimpleFloorplanMarkerArray) {
+				if (me._map_1.ggSimpleFloorplanMarkerArray.hasOwnProperty(id)) {
+					me._map_1__mapdiv.removeChild(me._map_1.ggSimpleFloorplanMarkerArray[id]);
 				}
-				me._map_1.mapWidthInDeg = tileInDeg * (tmpWidth / 256);
-				me._map_1.mapHeightInDeg = me._map_1.mapWidthInDeg / mapAR;
-			} else {
-				var tmpHeight = mapDetails['height'];
-				while (tmpHeight > 256) {
-					tmpHeight /= 2;
-				}
-				me._map_1.mapHeightInDeg = tileInDeg * (tmpHeight / 256);
-				me._map_1.mapWidthInDeg = me._map_1.mapHeightInDeg * mapAR;
 			}
-		}
-		me._map_1.ggInCheckBounds=false;
-		me._map_1.ggCheckBounds=function(mapDetails) {
-			if (me._map_1.ggInCheckBounds) return;
-			me._map_1.ggInCheckBounds = true;
-			var mapCenter = me._map_1.ggMap.getCenter();
-			var currentZoom = me._map_1.ggMap.getZoom();
-			var pixelInDeg = 360.0 / (Math.pow(2, currentZoom) * 256)
-			var xOffset = (me._map_1.clientWidth / 2.0) * pixelInDeg;
-			var yOffset = (me._map_1.clientHeight / 2.0) * pixelInDeg;
-			var x = mapCenter.lng;
-			var y = mapCenter.lat;
-			var xTemp = x;
-			var yTemp = y;
-			if (me._map_1.mapWidthInDeg < me._map_1.clientWidth * pixelInDeg) {
-				var xMargin = (me._map_1.clientWidth * pixelInDeg - me._map_1.mapWidthInDeg) / 2;
-				if (x < me._map_1.mapWidthInDeg / 2 - xMargin) x = me._map_1.mapWidthInDeg / 2 - xMargin;
-				if (x > me._map_1.mapWidthInDeg / 2 + xMargin) x = me._map_1.mapWidthInDeg / 2 + xMargin;
-			} else {
-				if (x > me._map_1.mapWidthInDeg - xOffset) x = me._map_1.mapWidthInDeg - xOffset;
-				if (x < xOffset) x = xOffset;
-			}
-			if (me._map_1.mapHeightInDeg < me._map_1.clientHeight * pixelInDeg) {
-				var yMargin = (me._map_1.clientHeight * pixelInDeg - me._map_1.mapHeightInDeg) / 2;
-				if (y < -me._map_1.mapHeightInDeg / 2 - yMargin) y = -me._map_1.mapHeightInDeg / 2 - yMargin;
-				if (y > -me._map_1.mapHeightInDeg / 2 + yMargin) y = -me._map_1.mapHeightInDeg / 2 + yMargin;
-			} else {
-				if (y < -me._map_1.mapHeightInDeg + yOffset) y = -me._map_1.mapHeightInDeg + yOffset;
-				if (y > -yOffset) y = -yOffset;
-			}
-			if (x != xTemp || y != yTemp) {
-				var newCenter = L.latLng(y, x);
-				me._map_1.ggMap.setView(newCenter, me._map_1.ggMap.getZoom(), {animate: false});
-			}
-			me._map_1.ggInCheckBounds = false;
+			me._map_1.ggMarkerInstances=[];
+			me._map_1.ggSimpleFloorplanMarkerArray=[];
 		}
 		player.addListener('changenode', function(event) {
-			if (me._map_1.ggLastActivMarker) {
-				if (me._map_1.ggLastActivMarker._div.ggDeactivate) me._map_1.ggLastActivMarker._div.ggDeactivate();
+			var mapDetails = player.getMapDetails(me._map_1.ggMapId);
+			if (mapDetails.hasOwnProperty('title')) {
+				me._map_1.ggCalculateFloorplanSize(mapDetails);
+				me._map_1.ggShowSimpleFloorplan(mapDetails);
+				me._map_1.ggPlaceMarkersOnSimpleFloorplan();
 			}
-			var id=player.getCurrentNode();
-			if (me.ggMarkerArray) {
-			var marker=me._map_1.ggMarkerArray[id];
+			if (me._map_1.ggRadar) me._map_1.ggRadar.update();
+			if (me._map_1.ggLastNodeId) {
+				var lastActiveMarker = me._map_1.ggSimpleFloorplanMarkerArray[me._map_1.ggLastNodeId];
+				if (lastActiveMarker && lastActiveMarker.ggDeactivate) lastActiveMarker.ggDeactivate();
+			}
+			var id = player.getCurrentNode();
+			var marker = me._map_1.ggSimpleFloorplanMarkerArray[id];
 			if (marker) {
-				if (marker._div.ggActivate) marker._div.ggActivate();
-			}
-			me._map_1.ggLastActivMarker=marker;
+				if (marker.ggActivate) marker.ggActivate();
 			}
 			if (player.getMapType(me._map_1.ggMapId) == 'file') {
 				var coords = player.getNodeMapCoords(id, me._map_1.ggMapId);
