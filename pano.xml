@@ -304,7 +304,7 @@
       <sequence title="Animation01"/>
     </animationsequences>
   </masternode>
-  <map type="file" height="897" id="FloorPlan02" transparent="0" bgcolor="rgba(255, 255, 255, 1)" tileformat="jpg" title="Roof Plan" floorplannorth="5" index="0" width="1048" zoomlevels="1" crispedges="0"/>
-  <map type="file" height="895" id="FloorPlan01" transparent="0" bgcolor="rgba(255, 255, 255, 1)" tileformat="jpg" title="Ground Plan" floorplannorth="0" index="1" width="754" zoomlevels="1" crispedges="0"/>
-  <map type="file" height="878" id="BasementPlan" transparent="0" bgcolor="rgba(255, 255, 255, 1)" tileformat="jpg" title="Basement Plan" floorplannorth="0" index="2" width="1094" zoomlevels="1" crispedges="0"/>
+  <map type="file" height="897" id="FloorPlan02" transparent="0" bgcolor="rgba(255, 255, 255, 1)" tileformat="png" title="Roof Plan" floorplannorth="5" index="0" width="1048" zoomlevels="1" crispedges="0"/>
+  <map type="file" height="895" id="FloorPlan01" transparent="0" bgcolor="rgba(255, 255, 255, 1)" tileformat="png" title="Ground Plan" floorplannorth="0" index="1" width="754" zoomlevels="1" crispedges="0"/>
+  <map type="file" height="878" id="BasementPlan" transparent="0" bgcolor="rgba(255, 255, 255, 1)" tileformat="png" title="Basement Plan" floorplannorth="0" index="2" width="1094" zoomlevels="1" crispedges="0"/>
 </tour>
