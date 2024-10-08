@@ -14,7 +14,7 @@
       <max scaletofit="1" pan="360" tilt="90" fovstereographic="330" fov="140" fovfisheye="360"/>
     </view>
     <userdata comment="" source="" datetime="" latitude="" info="" heading="0" nodeid="node4" title="" longitude="" copyright="" tags="Roof" customnodeid="" description="" author="">
-      <mapcoords mapid="FloorPlan02" x_floorplan_percent="53.5305" x="0.770416" y="-1.008" y_floorplan_percent="81.8283"/>
+      <mapcoords mapid="FloorPlan02" x_floorplan_percent="54.2939" x="0.781403" y="-1.07391" y_floorplan_percent="87.1795"/>
     </userdata>
     <hotspots wordwrap="1" height="20" smoothmovement="0" width="180">
       <label height="20" background="1" textcolor="0x000000" bordercolor="0x000000" borderalpha="1" backgroundcolor="0xffffff" wordwrap="1" backgroundalpha="1" borderradius="1" border="1" enabled="1" width="180" textalpha="1"/>
@@ -40,7 +40,7 @@
       <max scaletofit="1" pan="360" tilt="90" fovstereographic="328" fov="137" fovfisheye="359"/>
     </view>
     <userdata comment="" source="" datetime="" latitude="" info="" heading="0" nodeid="node6" title="" longitude="" copyright="" tags="Ground" customnodeid="" description="" author="">
-      <mapcoords mapid="FloorPlan01" x_floorplan_percent="51.9894" x="1.07666" y="-0.604248" y_floorplan_percent="24.581"/>
+      <mapcoords mapid="FloorPlan01" x_floorplan_percent="53.5809" x="1.10962" y="-0.675659" y_floorplan_percent="27.486"/>
     </userdata>
     <hotspots wordwrap="1" height="20" smoothmovement="0" width="180">
       <label height="20" background="1" textcolor="0x000000" bordercolor="0x000000" borderalpha="1" backgroundcolor="0xffffff" wordwrap="1" backgroundalpha="1" borderradius="1" border="1" enabled="1" width="180" textalpha="1"/>
@@ -66,7 +66,7 @@
       <max scaletofit="1" pan="360" tilt="90" fovstereographic="330" fov="140" fovfisheye="360"/>
     </view>
     <userdata comment="" source="" datetime="" latitude="" info="" heading="0" nodeid="node8" title="" longitude="" copyright="" tags="Ground" customnodeid="" description="" author="">
-      <mapcoords mapid="FloorPlan01" x_floorplan_percent="51.4589" x="1.06567" y="-1.59302" y_floorplan_percent="64.8045"/>
+      <mapcoords mapid="FloorPlan01" x_floorplan_percent="51.9894" x="1.07666" y="-1.48865" y_floorplan_percent="60.5587"/>
     </userdata>
     <hotspots wordwrap="1" height="20" smoothmovement="0" width="180">
       <label height="20" background="1" textcolor="0x000000" bordercolor="0x000000" borderalpha="1" backgroundcolor="0xffffff" wordwrap="1" backgroundalpha="1" borderradius="1" border="1" enabled="1" width="180" textalpha="1"/>
@@ -93,7 +93,7 @@
       <max scaletofit="1" pan="360" tilt="90" fovstereographic="330" fov="140" fovfisheye="360"/>
     </view>
     <userdata comment="" source="" datetime="" latitude="" info="" heading="0" nodeid="node9" title="" longitude="" copyright="" tags="Ground" customnodeid="" description="" author="">
-      <mapcoords mapid="FloorPlan01" x_floorplan_percent="51.9894" x="1.07666" y="-2.14233" y_floorplan_percent="87.1508"/>
+      <mapcoords mapid="FloorPlan01" x_floorplan_percent="52.5199" x="1.08765" y="-2.09839" y_floorplan_percent="85.3631"/>
     </userdata>
     <hotspots wordwrap="1" height="20" smoothmovement="0" width="180">
       <label height="20" background="1" textcolor="0x000000" bordercolor="0x000000" borderalpha="1" backgroundcolor="0xffffff" wordwrap="1" backgroundalpha="1" borderradius="1" border="1" enabled="1" width="180" textalpha="1"/>
@@ -119,7 +119,7 @@
       <max scaletofit="1" pan="360" tilt="90" fovstereographic="330" fov="140" fovfisheye="360"/>
     </view>
     <userdata comment="" source="" datetime="" latitude="" info="" heading="0" nodeid="node10" title="" longitude="" copyright="" tags="Basement" customnodeid="" description="" author="">
-      <mapcoords mapid="BasementPlan" x_floorplan_percent="73.8574" x="1.10962" y="-0.164795" y_floorplan_percent="13.6674"/>
+      <mapcoords mapid="BasementPlan" x_floorplan_percent="74.9543" x="1.1261" y="-0.22522" y_floorplan_percent="18.6788"/>
     </userdata>
     <hotspots wordwrap="1" height="20" smoothmovement="0" width="180">
       <label height="20" background="1" textcolor="0x000000" bordercolor="0x000000" borderalpha="1" backgroundcolor="0xffffff" wordwrap="1" backgroundalpha="1" borderradius="1" border="1" enabled="1" width="180" textalpha="1"/>
@@ -146,7 +146,7 @@
       <max scaletofit="1" pan="360" tilt="90" fovstereographic="330" fov="140" fovfisheye="360"/>
     </view>
     <userdata comment="" source="" datetime="" latitude="" info="" heading="0" nodeid="node11" title="" longitude="" copyright="" tags="Basement" customnodeid="" description="" author="">
-      <mapcoords mapid="BasementPlan" x_floorplan_percent="74.5887" x="1.12061" y="-0.422974" y_floorplan_percent="35.0797"/>
+      <mapcoords mapid="BasementPlan" x_floorplan_percent="75.8684" x="1.13983" y="-0.403748" y_floorplan_percent="33.4852"/>
     </userdata>
     <hotspots wordwrap="1" height="20" smoothmovement="0" width="180">
       <label height="20" background="1" textcolor="0x000000" bordercolor="0x000000" borderalpha="1" backgroundcolor="0xffffff" wordwrap="1" backgroundalpha="1" borderradius="1" border="1" enabled="1" width="180" textalpha="1"/>
@@ -174,7 +174,7 @@
       <max scaletofit="1" pan="360" tilt="90" fovstereographic="330" fov="140" fovfisheye="360"/>
     </view>
     <userdata comment="" source="" datetime="" latitude="" info="" heading="0" nodeid="node13" title="" longitude="" copyright="" tags="Basement" customnodeid="" description="" author="">
-      <mapcoords mapid="BasementPlan" x_floorplan_percent="74.223" x="1.11511" y="-0.697632" y_floorplan_percent="57.8588"/>
+      <mapcoords mapid="BasementPlan" x_floorplan_percent="74.9543" x="1.1261" y="-0.700378" y_floorplan_percent="58.0866"/>
     </userdata>
     <hotspots wordwrap="1" height="20" smoothmovement="0" width="180">
       <label height="20" background="1" textcolor="0x000000" bordercolor="0x000000" borderalpha="1" backgroundcolor="0xffffff" wordwrap="1" backgroundalpha="1" borderradius="1" border="1" enabled="1" width="180" textalpha="1"/>
@@ -202,7 +202,7 @@
       <max scaletofit="1" pan="360" tilt="90" fovstereographic="330" fov="140" fovfisheye="360"/>
     </view>
     <userdata comment="" source="" datetime="" latitude="" info="" heading="0" nodeid="node14" title="" longitude="" copyright="" tags="Basement" customnodeid="" description="" author="">
-      <mapcoords mapid="BasementPlan" x_floorplan_percent="75.3199" x="1.13159" y="-1.03271" y_floorplan_percent="85.6492"/>
+      <mapcoords mapid="BasementPlan" x_floorplan_percent="74.4059" x="1.11786" y="-1.00525" y_floorplan_percent="83.3713"/>
     </userdata>
     <hotspots wordwrap="1" height="20" smoothmovement="0" width="180">
       <label height="20" background="1" textcolor="0x000000" bordercolor="0x000000" borderalpha="1" backgroundcolor="0xffffff" wordwrap="1" backgroundalpha="1" borderradius="1" border="1" enabled="1" width="180" textalpha="1"/>
@@ -229,7 +229,7 @@
       <max scaletofit="1" pan="360" tilt="90" fovstereographic="330" fov="140" fovfisheye="360"/>
     </view>
     <userdata comment="" source="" datetime="" latitude="" info="" heading="0" nodeid="node15" title="" longitude="" copyright="" tags="Basement" customnodeid="" description="" author="">
-      <mapcoords mapid="BasementPlan" x_floorplan_percent="21.9378" x="0.32959" y="-0.845947" y_floorplan_percent="70.1595"/>
+      <mapcoords mapid="BasementPlan" x_floorplan_percent="21.5722" x="0.324097" y="-0.873413" y_floorplan_percent="72.4374"/>
     </userdata>
     <hotspots wordwrap="1" height="20" smoothmovement="0" width="180">
       <label height="20" background="1" textcolor="0x000000" bordercolor="0x000000" borderalpha="1" backgroundcolor="0xffffff" wordwrap="1" backgroundalpha="1" borderradius="1" border="1" enabled="1" width="180" textalpha="1"/>
@@ -258,7 +258,7 @@
       <max scaletofit="1" pan="360" tilt="90" fovstereographic="330" fov="140" fovfisheye="360"/>
     </view>
     <userdata comment="" source="" datetime="" latitude="" info="" heading="0" nodeid="node16" title="" longitude="" copyright="" tags="Roof" customnodeid="" description="" author="">
-      <mapcoords mapid="FloorPlan02" x_floorplan_percent="15.0763" x="0.21698" y="-0.623474" y_floorplan_percent="50.6132"/>
+      <mapcoords mapid="FloorPlan02" x_floorplan_percent="14.5038" x="0.20874" y="-0.656433" y_floorplan_percent="53.2887"/>
     </userdata>
     <hotspots wordwrap="1" height="20" smoothmovement="0" width="180">
       <label height="20" background="1" textcolor="0x000000" bordercolor="0x000000" borderalpha="1" backgroundcolor="0xffffff" wordwrap="1" backgroundalpha="1" borderradius="1" border="1" enabled="1" width="180" textalpha="1"/>
@@ -285,7 +285,7 @@
       <max scaletofit="1" pan="360" tilt="90" fovstereographic="330" fov="140" fovfisheye="360"/>
     </view>
     <userdata comment="" source="" datetime="" latitude="" info="" heading="0" nodeid="node17" title="" longitude="" copyright="" tags="Pano2VR7|Roof" customnodeid="" description="" author="">
-      <mapcoords mapid="FloorPlan02" x_floorplan_percent="54.1985" x="0.780029" y="-0.379028" y_floorplan_percent="30.7692"/>
+      <mapcoords mapid="FloorPlan02" x_floorplan_percent="54.0076" x="0.777283" y="-0.379028" y_floorplan_percent="30.7692"/>
     </userdata>
     <hotspots wordwrap="1" height="20" smoothmovement="0" width="180">
       <label height="20" background="1" textcolor="0x000000" bordercolor="0x000000" borderalpha="1" backgroundcolor="0xffffff" wordwrap="1" backgroundalpha="1" borderradius="1" border="1" enabled="1" width="180" textalpha="1"/>
