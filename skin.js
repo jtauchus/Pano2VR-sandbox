@@ -1,7 +1,7 @@
 // Garden Gnome Software - Skin
 // Pano2VR 7.1.4/20938
 // Filename: PMC.ggsk
-// Generated 2024-10-08T11:36:21
+// Generated 2024-10-08T12:57:11
 
 function pano2vrSkin(player,base) {
 	player.addVariable('vis_floorplan', 2, false, { ignoreInState: 0  });
@@ -904,6 +904,9 @@ function pano2vrSkin(player,base) {
 				if (marker._div.ggActivate) marker._div.ggActivate();
 			}
 			me._map.ggLastActivMarker=marker;
+			}
+			if (!me._map.ggMapNotLoaded) {
+				me._map.ggCenterNode();
 			}
 			if (player.getMapType(me._map.ggMapId) == 'file') {
 				var coords = player.getNodeMapCoords(id, me._map.ggMapId);
